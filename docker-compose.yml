@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+  redis_cache:
+    restart: always
+    image: redis:latest
+    container_name: redis_cache
+
+  processor_box:
+    restart: always
+    build: ./processor_box
+    image: python:3.6
+    container_name: processor_box
+    depends_on:
+      - redis_cache
+    volumes:
+      - ./processor_box:/processor_box
+      - ./logs/processor_box:/logs
