@@ -2,7 +2,7 @@
 import json
 import redis
 
-MICRO_SERVICE_NAME = 'subscriber'
+MICRO_SERVICE_NAME = 'publisher'
 
 
 class RedisSubscriber:
@@ -30,5 +30,15 @@ class RedisSubscriber:
 
 if __name__ == '__main__':
     redis_subscriber = RedisSubscriber()
+    t = 1
     while True:
-        redis_subscriber.subscribe()
+        redis_subscriber.publish(
+            json.dumps(
+                {
+                    "target": "subscriber",
+                    "message": "Connection working {}".format(t),
+                    "data": {}
+                }
+            )
+        )
+        t += 1

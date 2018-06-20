@@ -3,16 +3,17 @@ services:
 
   redis_cache:
     restart: always
-    image: redis:latest
+    image: redis:alpine
     container_name: redis_cache
+
+  publisher_box:
+    restart: always
+    build: publisher_box
+    depends_on:
+      - redis_cache
 
   processor_box:
     restart: always
-    build: ./processor_box
-    image: python:3.6
-    container_name: processor_box
+    build: processor_box
     depends_on:
       - redis_cache
-    volumes:
-      - ./processor_box:/processor_box
-      - ./logs/processor_box:/logs

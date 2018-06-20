@@ -1,8 +1,8 @@
 FROM python:3.6
 
-WORKDIR /processor_box
+WORKDIR /publisher_box
 
-ADD . /processor_box
+ADD . /publisher_box
 
 RUN pip install --no-cache-dir -r requirements.txt
 
