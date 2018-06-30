@@ -7,13 +7,21 @@ services:
     container_name: redis_cache
 
   publisher_box:
-    restart: always
+    restart: on-failure
     build: publisher_box
     depends_on:
       - redis_cache
 
   processor_box:
-    restart: always
+    restart: on-failure
     build: processor_box
     depends_on:
       - redis_cache
+
+  final_box:
+    restart: on-failure
+    build: final_box
+    depends_on:
+      - redis_cache
+      - publisher_box
+      - processor_box
