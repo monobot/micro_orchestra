@@ -1,5 +1,5 @@
 # micro_orchestra
-##Test for 3 microservices communicating
+## Test for 3 microservices communicating
 
 3 docker microservices communication throught a redis docker instance.
 
@@ -10,4 +10,4 @@ Each message will be processed only once using the redis lock feature.
 So you can scalate up any of the microservices without worring about the concurrence.
 
 eg:
-docker-compose up --scale final__box=3 processor__box=2
+docker-compose up --scale final_box=3 processor_box=2
