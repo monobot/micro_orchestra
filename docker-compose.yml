@@ -1,22 +1,33 @@
 version: '3'
+
 services:
 
   redis_cache:
     restart: on-failure
     image: redis:alpine
     container_name: redis_cache
+    networks:
+      - microorchestra
 
   publisher_box:
     restart: on-failure
     build: publisher_box
     depends_on:
       - redis_cache
+    networks:
+      - microorchestra
+    environment:
+      - START_NUMBER=2
 
   processor_box:
     restart: on-failure
     build: processor_box
     depends_on:
       - redis_cache
+    networks:
+      - microorchestra
+    environment:
+      - MULTIPLIER=2
 
   final_box:
     restart: on-failure
@@ -25,3 +36,10 @@ services:
       - redis_cache
       - publisher_box
       - processor_box
+    networks:
+      - microorchestra
+    environment:
+      - FIELD_NAME=results
+
+networks:
+  microorchestra:

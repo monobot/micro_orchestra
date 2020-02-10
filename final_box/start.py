@@ -1,9 +1,12 @@
-#!/usr/bin/env python
+import os
+
 from redis_connector import RedisConnector
+
+field_name = os.environ.get('FIELD_NAME', 'default_fieldname')
 
 
 def process(message):
-    print(message)
+    print(f'{field_name}: {message}')
 
 
 HOST = 'redis_cache'

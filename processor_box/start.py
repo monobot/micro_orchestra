@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+import os
 import uuid
 
 from redis_connector import RedisConnector
@@ -11,9 +11,11 @@ MICRO_SERVICE_NAME = 'processor'
 
 redis_connector_processor = RedisConnector(HOST, PORT, QUEUES, MICRO_SERVICE_NAME)
 
+multiplier = int(os.environ.get('MULTIPLIER', '1'))
+
 
 def process(message):
-    first_operator = message['data']['first']
+    first_operator = multiplier * message['data']['first']
     second_operator = message['data']['second']
     operation = message['data']['operation']
     if operation == '+':
@@ -26,7 +28,7 @@ def process(message):
             "message": "calculated",
             "data": {
                 'result': result
-            }
+            },
         }
     )
 
